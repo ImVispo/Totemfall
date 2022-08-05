@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
+    [SerializeField] private Transform pfDamagePopup;
     [SerializeField] private int _damage;
 
     private void Awake()
@@ -29,8 +30,16 @@ public class Projectile : MonoBehaviour
         // get enemy component and do some damage to enemy component
         Enemy enemy = collider.GetComponent<Enemy>();
         enemy.DoDamage(_damage);
+        createDamagePopup(_damage, false);
 
         // destroy this projectile
         Destroy(gameObject);
+    }
+
+    private void createDamagePopup(int damage, bool isCrit=false)
+    {
+        Transform damagePopupTransform = Instantiate(pfDamagePopup, _rigidbody.position, Quaternion.identity);
+        DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
+        damagePopup.Setup(damage, isCrit);
     }
 }
