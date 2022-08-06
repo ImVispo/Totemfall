@@ -26,7 +26,6 @@ public class RootingTotem : Totem
 
     private void updateSlowBonus(Enemy enemy, float slowBonus)
     {
-        Debug.Log(slowBonus);
         enemy.Speed += slowBonus;
     }
 

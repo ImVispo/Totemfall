@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     // Project prefab to spawn
     [SerializeField] private GameObject _projectile;
-
     [SerializeField] private float _speed;
     public float Speed
     {
@@ -24,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _shootCooldown;
     private bool _canShoot = true;
 
+    [SerializeField] private int _health;
+    [SerializeField] private HealthBar healthBar;
+
     // Returns normalized vector of direction towards mouse
     protected Vector2 GetAimDirection()
     {
@@ -34,6 +36,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+
+        if (Input.GetKeyDown("mouse 1"))
+        {
+            DoDamage(5);
+        }
         if (Input.GetKey("mouse 0"))
             ShootProjectile();
 
@@ -44,16 +51,23 @@ public class Player : MonoBehaviour
 
         if (_input.x > 0)
         {
-            Vector3 scale = transform.localScale;
+            Transform orcTransform = transform.Find("Orc");
+            Vector3 scale = orcTransform.localScale;
             scale.x = Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            orcTransform.localScale = scale;
         }
         else if (_input.x < 0)
         {
-            Vector3 scale = transform.localScale;
+            Transform orcTransform = transform.Find("Orc");
+            Vector3 scale = orcTransform.localScale;
             scale.x = -Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            orcTransform.localScale = scale;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = _input * _speed;
     }
 
     private void ShootProjectile()
@@ -74,10 +88,9 @@ public class Player : MonoBehaviour
         _canShoot = true;
     }
 
-
-    private void FixedUpdate()
+    public void DoDamage(int damage)
     {
-        rb.velocity = _input * _speed;
+        _health -= damage;
+        healthBar.SetSize(_health / 100f);
     }
-
 }
