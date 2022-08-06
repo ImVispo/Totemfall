@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
         {
             DoDamage(5);
         }
+
         if (Input.GetKey("mouse 0"))
             ShootProjectile();
 

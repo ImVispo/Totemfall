@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    [Header("Components")]
     public Transform player;
+    [SerializeField] private Rigidbody2D rb;
+
+    [Space]
+    [Header("Settings")]
+    [SerializeField] private int _health;
+    [SerializeField] private float _baseSpeed;
     [SerializeField] private float _speed;
     public float Speed
     {
         get => _speed;
         set => _speed = value;
     }
-    [SerializeField] private int _health;
 
-    [SerializeField] private Rigidbody2D rb;
     private Vector2 movement;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void Update()
     {
@@ -36,6 +34,11 @@ public class Enemy : MonoBehaviour
 
     void MoveCharacter(Vector2 direction) {
         rb.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
+    }
+
+    public void ResetMoveSpeed()
+    {
+        Speed = _baseSpeed;
     }
 
     public void DoDamage(int damage)

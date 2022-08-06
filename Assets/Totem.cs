@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,37 +7,22 @@ using UnityEngine;
 public class Totem : MonoBehaviour
 {
     // Gameobject within the radius
-    [SerializeField] private List<GameObject> _gameObjects;
+    [SerializeField] protected List<Enemy> enemies;
 
-    // Components
-    void Awake()
-    {
-    }
-
-    // Other
-    void Start()
-    {
-    }
-
-    // Input
-    void Update()
-    {
-    }
-
-    // Physics
-    void FixedUpdate()
-    {
-    }
+    protected Action EnemyEnteredEvent;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        _gameObjects.Add(collider.gameObject);
+        enemies.Add(collider.GetComponent<Enemy>());
         UnitEntered(collider.gameObject);
+
+        if (collider.CompareTag("Enemy"))
+            EnemyEnteredEvent?.Invoke();
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        _gameObjects.Remove(collider.gameObject);
+        enemies.Remove(collider.GetComponent<Enemy>());
         UnitExit(collider.gameObject);
     }
 
