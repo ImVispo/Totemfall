@@ -6,8 +6,8 @@ using UnityEngine;
 public class RootingTotem : Totem
 {
 
-    [SerializeField] private float _slowBonus;
     [SerializeField] private float _rootInterval;
+    [SerializeField] private float _rootDuration;
 
     private bool _isRunning;
 
@@ -36,7 +36,7 @@ public class RootingTotem : Totem
         foreach (Enemy e in enemies)
             e.Speed = 0;
 
-        yield return new WaitForSeconds(_rootInterval);
+        yield return new WaitForSeconds(_rootDuration);
 
         // reset all enemy move speed
         foreach (Enemy e in enemies)
