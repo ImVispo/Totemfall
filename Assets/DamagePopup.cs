@@ -40,26 +40,22 @@ public class DamagePopup : MonoBehaviour
 
     private void Update()
     {
-        float moveYSpeed = 1;
         transform.position += moveVector * Time.deltaTime;
         moveVector -= moveVector * 8f * Time.deltaTime;
 
         if (disappearTimer > DISSAPEAR_TIMER_MAX * 0.5f)
         {
             // First half of popup
-            float increaseScaleAmount = 1f;
-            transform.localScale += Vector3.one * increaseScaleAmount * Time.deltaTime;
+            transform.localScale += Vector3.one * 1f * Time.deltaTime;
         } else
         {
             // Second half of popup
-            float decreaseScaleAmount = 1f;
-            transform.localScale -= Vector3.one * decreaseScaleAmount * Time.deltaTime;
+            transform.localScale -= Vector3.one * 1f * Time.deltaTime;
         }
 
         disappearTimer -= Time.deltaTime;
         if (disappearTimer > 0) return;
-        float disappearSpeed = 5;
-        textColor.a -= disappearSpeed * Time.deltaTime;
+        textColor.a -= 5 * Time.deltaTime;
         textMesh.color = textColor;
         if (textColor.a < 0) Destroy(gameObject);
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CircleCollider2D))]
 public class Totem : MonoBehaviour
 {
     // Gameobject within the radius
@@ -29,7 +30,6 @@ public class Totem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("bruh");
         _gameObjects.Add(collider.gameObject);
         UnitEntered(collider.gameObject);
     }

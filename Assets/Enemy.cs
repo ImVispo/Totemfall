@@ -7,6 +7,11 @@ public class Enemy : MonoBehaviour
 
     public Transform player;
     [SerializeField] private float _speed;
+    public float Speed
+    {
+        get => _speed;
+        set => _speed = value;
+    }
     [SerializeField] private int _health;
 
     [SerializeField] private Rigidbody2D rb;
