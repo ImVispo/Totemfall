@@ -33,14 +33,14 @@ public class RootingTotem : Totem
     private IEnumerator RootTimer()
     {
         // root all enemies
-        foreach (Enemy enemy in enemies)
-            enemy.Speed = 0;
+        foreach (Enemy e in enemies)
+            e.Speed = 0;
 
         yield return new WaitForSeconds(_rootInterval);
 
         // reset all enemy move speed
-        foreach (Enemy enemy in enemies)
-            enemy.ResetMoveSpeed();
+        foreach (Enemy e in enemies)
+            e.ResetMoveSpeed();
 
         yield return new WaitForSeconds(_rootInterval);
 

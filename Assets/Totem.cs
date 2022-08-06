@@ -13,7 +13,9 @@ public class Totem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        enemies.Add(collider.GetComponent<Enemy>());
+        if (collider.TryGetComponent<Enemy>(out Enemy e))
+            enemies.Add(e);
+
         UnitEntered(collider.gameObject);
 
         if (collider.CompareTag("Enemy"))
