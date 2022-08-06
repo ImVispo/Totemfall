@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int _health;
     [SerializeField] private float _baseSpeed;
-    [SerializeField] private float _speed;
+    private float _speed;
     public float Speed
     {
         get => _speed;
@@ -20,6 +20,11 @@ public class Enemy : MonoBehaviour
     }
 
     private Vector2 movement;
+
+    private void Start()
+    {
+        _speed = _baseSpeed;
+    }
 
     private void Update()
     {
