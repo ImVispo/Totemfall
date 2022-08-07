@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : MonoBehaviour
+public abstract class Ability : MonoBehaviour
 {
 
     [SerializeField] protected int _damage;
@@ -10,11 +10,7 @@ public class Ability : MonoBehaviour
     protected bool isCrit = false;
     [SerializeField] private Transform _pfDamagePopup;
 
-    public virtual void FireAbility(Enemy enemy)
-    {
-
-
-    }
+    public abstract void FireAbility(Enemy enemy);
 
     public virtual int CalculateDamage()
     {
