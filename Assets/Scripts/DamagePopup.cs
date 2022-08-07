@@ -19,18 +19,17 @@ public class DamagePopup : MonoBehaviour
     public void Setup(int damage, bool isCrit)
     {
         textMesh.SetText(damage.ToString());
-        //if (isCrit)
-        //{
-        //    textMesh.fontSize = 4;
-        //    textColor = new Color(255, 53, 0, 255);
-        //}
-        //else
-        //{
-        //    textMesh.fontSize = 3;
-        //    textColor = new Color(255, 163, 0, 255);
-        //}
-        //textMesh.color = textColor;
-        textColor = textMesh.color;
+        if (isCrit)
+        {
+            textMesh.fontSize = 4;
+            //textColor = Color.red;
+            //textMesh.color = Color.red;
+            textColor = new Color(1, 0.47f, 0, 1);
+            textMesh.color = new Color(1, 0.47f, 0, 1);
+        } else
+        {
+            textColor = textMesh.color;
+        }
         disappearTimer = DISSAPEAR_TIMER_MAX;
         moveVector = new Vector3(1, 1) * 5f;
 

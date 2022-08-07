@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 {
     private Vector2 _input;
 
-    // Project prefab to spawn
-    [SerializeField] private GameObject _projectile;
     [SerializeField] private float _speed;
     public float Speed
     {
@@ -16,9 +14,12 @@ public class Player : MonoBehaviour
         set => _speed = value;
     }
 
+    // Project prefab to spawn
+    [SerializeField] private GameObject _projectile;
+    [SerializeField] private float _projectileSpeed;
+
     // Physics component
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float _projectileSpeed;
 
     [SerializeField] private float _shootCooldown;
     private bool _canShoot = true;
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float totemSpawnRange;
     [SerializeField] private List<Totem> totemPrefabs;
     [SerializeField] private SpriteRenderer rangeIndicator;
+
+    [SerializeField] private GameObject _lightningBolt;
 
     // Are we currently trying to place a totem
     private bool _isSpawningTotem;
@@ -65,7 +68,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey("mouse 0"))
         {
-            ShootProjectile();
+            ShootLightningBolt();
         }
 
         if (Input.GetKeyDown("mouse 1"))
@@ -115,6 +118,24 @@ public class Player : MonoBehaviour
         GameObject instantiatedProjectile = Instantiate(_projectile, transform.position, Quaternion.identity);
         Projectile projectile = instantiatedProjectile.GetComponent<Projectile>();
         projectile.SetVelocity(GetAimDirection() * _projectileSpeed);
+    }
+
+    private void ShootLightningBolt()
+    {
+        if (!_canShoot || _isSpawningTotem)
+            return;
+
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var hits = Physics2D.GetRayIntersectionAll(ray, 1500f);
+        foreach (var hit in hits)
+        {
+            if (hit.collider.TryGetComponent<Enemy>(out Enemy enemy)) {
+                StartCoroutine(ShootCooldownTimer());
+                GameObject lightningBolt = Instantiate<GameObject>(_lightningBolt, transform.position, Quaternion.identity);
+                lightningBolt.GetComponent<LightningBolt>().dealDamage(enemy);
+            }
+            break;
+        }
     }
 
     private IEnumerator ShootCooldownTimer()

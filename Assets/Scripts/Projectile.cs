@@ -31,8 +31,6 @@ public class Projectile : MonoBehaviour
         Enemy enemy = collider.GetComponent<Enemy>();
         enemy.DoDamage(_damage);
         createDamagePopup(_damage, false);
-
-        // destroy this projectile
         Destroy(gameObject);
     }
 
@@ -42,4 +40,5 @@ public class Projectile : MonoBehaviour
         DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
         damagePopup.Setup(damage, isCrit);
     }
+
 }
