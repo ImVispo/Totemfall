@@ -125,17 +125,14 @@ public class Player : MonoBehaviour
         if (!_canShoot || _isSpawningTotem)
             return;
 
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var hits = Physics2D.GetRayIntersectionAll(ray, 1500f);
-        foreach (var hit in hits)
-        {
-            if (hit.collider.TryGetComponent<Enemy>(out Enemy enemy)) {
-                StartCoroutine(ShootCooldownTimer());
-                GameObject lightningBolt = Instantiate<GameObject>(_lightningBolt, transform.position, Quaternion.identity);
-                lightningBolt.GetComponent<LightningBolt>().dealDamage(enemy);
-            }
-            break;
-        }
+        StartCoroutine(ShootCooldownTimer());
+        GameObject gameObject = Instantiate<GameObject>(_lightningBolt, transform.position, Quaternion.identity);
+        LightningBolt2D lightningBolt = gameObject.GetComponent<LightningBolt2D>();
+        lightningBolt.startPoint = transform.position;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        lightningBolt.endPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        lightningBolt.FireOnce();
     }
 
     private IEnumerator ShootCooldownTimer()

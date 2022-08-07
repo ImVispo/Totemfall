@@ -5,30 +5,38 @@ using UnityEngine;
 public class LightningBolt : MonoBehaviour
 {
     [SerializeField] private int _damage;
+    private int _damageDealt;
     [SerializeField] private Transform pfDamagePopup;
     [SerializeField] private float _overloadChance;
     private bool isCrit = false;
+    private List<Enemy> enemies = new List<Enemy>();
 
-    public void dealDamage(Enemy enemy)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        LightningBolt2D lightningBolt = gameObject.GetComponent<LightningBolt2D>();
-        lightningBolt.startPoint = transform.position;
-        lightningBolt.endPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        if (collider.gameObject.tag != "Enemy")
+        {
+            return;
+        }
+
+        Debug.Log(enemies);
+
+        // get enemy component and do some damage to enemy component
+        Enemy enemy = collider.GetComponent<Enemy>();
+        if (enemies.Contains(enemy)) return;
+        enemies.Add(enemy);
+
+        _damageDealt = _damage;
         float randValue = Random.value;
-        Debug.Log(randValue);
-        Debug.Log((1f - _overloadChance));
         if (randValue < _overloadChance)
         {
             isCrit = true;
-            _damage += _damage;
-            lightningBolt.arcCount = 3;
+            _damageDealt += _damage;
+            //lightningBolt.arcCount = 3;
         }
 
-        lightningBolt.FireOnce();
-
-        enemy.DoDamage(_damage);
-        createDamagePopup(_damage, enemy.GetComponent<Rigidbody2D>().position, isCrit);
+        enemy.DoDamage(_damageDealt);
+        createDamagePopup(_damageDealt, enemy.GetComponent<Rigidbody2D>().position, isCrit);
         StartCoroutine(DestroyGameObject());
     }
 
