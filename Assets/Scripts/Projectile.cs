@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviour
+public abstract class Projectile : Ability
 {
-    private Rigidbody2D _rigidbody;
-    [SerializeField] private Transform pfDamagePopup;
-    [SerializeField] private int _damage;
+    protected Rigidbody2D _rigidbody;
+    [SerializeField] protected float _projectileSpeed;
 
     private void Awake()
     {
@@ -16,29 +15,19 @@ public class Projectile : MonoBehaviour
 
     public void SetVelocity(Vector2 velocity)
     {
-        _rigidbody.velocity = velocity;
+        _rigidbody.velocity = velocity * _projectileSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-
         if (collider.gameObject.tag != "Enemy")
         {
             return;
         }
 
-        // get enemy component and do some damage to enemy component
-        Enemy enemy = collider.GetComponent<Enemy>();
-        enemy.TakeDamage(_damage);
-        createDamagePopup(_damage, false);
-        Destroy(gameObject);
+        DealDamage(collider);
     }
 
-    private void createDamagePopup(int damage, bool isCrit=false)
-    {
-        Transform damagePopupTransform = Instantiate(pfDamagePopup, _rigidbody.position, Quaternion.identity);
-        DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
-        damagePopup.Setup(damage, isCrit);
-    }
+    public abstract void DealDamage(Collider2D collider);
 
 }
