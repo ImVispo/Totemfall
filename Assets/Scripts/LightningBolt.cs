@@ -11,7 +11,7 @@ public class LightningBolt : Ability
         lightningBolt.startPoint = transform.position;
         lightningBolt.endPoint = enemy.transform.position;
 
-        int _damageDealt = CalculateDamage();
+        int _damageDealt = CalculateDamage(); 
 
         if (isCrit) lightningBolt.arcCount = 3;
         lightningBolt.FireOnce();

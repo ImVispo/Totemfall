@@ -13,10 +13,8 @@ public class AbilitySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!_canFire) return;
+        if (!_canFire || enemies.Count == 0) return;
         StartCoroutine(FireCooldownTimer());
-
-        Ability ability = Instantiate<Ability>(_abilityPrefab, transform.position, Quaternion.identity);
 
         Enemy closestEnemy = null;
         float closestDistance = 0;
@@ -29,7 +27,10 @@ public class AbilitySpawner : MonoBehaviour
                 closestEnemy = e;
             }
         }
-        if (closestEnemy) ability.FireAbility(closestEnemy);
+        if (closestEnemy) {
+            Ability ability = Instantiate<Ability>(_abilityPrefab, transform.position, Quaternion.identity);
+            ability.FireAbility(closestEnemy);
+        } 
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

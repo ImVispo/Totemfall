@@ -9,6 +9,11 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField] private float _spawnRate;
     private float _spawnTimer;
 
+    private void Start()
+    {
+        _spawnTimer = _spawnRate;
+    }
+
     // Update is called once per frame
     void Update()
     {
