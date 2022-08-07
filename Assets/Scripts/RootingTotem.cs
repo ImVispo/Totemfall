@@ -47,6 +47,12 @@ public class RootingTotem : Totem
         StartCoroutine(RootTimer());
     }
 
+    protected override void OnTotemExpired()
+    {
+        foreach (Enemy e in enemies)
+            e.ResetMoveSpeed();
+    }
+
     //protected override void UnitEntered(GameObject gameObject)
     //{
     //    if (gameObject.tag == "Enemy")

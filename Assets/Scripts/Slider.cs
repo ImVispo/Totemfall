@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour
+public class Slider : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
     private Transform bar;
     private void Start()
     {
@@ -12,7 +13,6 @@ public class HealthBar : MonoBehaviour
 
     public void SetSize(float sizeNormalized)
     {
-        Debug.Log(sizeNormalized);
         bar.localScale = new Vector3(sizeNormalized, 1);
     }
 }

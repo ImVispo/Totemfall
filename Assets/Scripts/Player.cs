@@ -24,14 +24,10 @@ public class Player : MonoBehaviour
     private bool _canShoot = true;
 
     [SerializeField] private int _health;
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private Slider healthBar;
 
-    // Returns normalized vector of direction towards mouse
-    protected Vector2 GetAimDirection()
-    {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return (mousePosition - (Vector2)transform.position).normalized;
-    }
+    [SerializeField] private float totemSpawnRange;
+    [SerializeField] private List<Totem> totemPrefabs;
 
     // Update is called once per frame
     private void Update()
@@ -40,6 +36,16 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("mouse 1"))
         {
             DoDamage(5);
+        }
+
+        if (Input.GetKeyDown("1"))
+        {
+            SpawnTotem(totemPrefabs[0]);
+        }
+
+        if (Input.GetKeyDown("2"))
+        {
+            SpawnTotem(totemPrefabs[1]);
         }
 
         if (Input.GetKey("mouse 0"))
@@ -71,6 +77,13 @@ public class Player : MonoBehaviour
         rb.velocity = _input * _speed;
     }
 
+    // Returns normalized vector of direction towards mouse
+    protected Vector2 GetAimDirection()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return (mousePosition - (Vector2)transform.position).normalized;
+    }
+
     private void ShootProjectile()
     {
         if (!_canShoot)
@@ -93,5 +106,12 @@ public class Player : MonoBehaviour
     {
         _health -= damage;
         healthBar.SetSize(_health / 100f);
+    }
+
+    public void SpawnTotem(Totem totemPrefab)
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Vector2.Distance(mousePosition, transform.position) > totemSpawnRange) return;
+        Instantiate<Totem>(totemPrefab, (Vector3)mousePosition, Quaternion.identity);
     }
 }
