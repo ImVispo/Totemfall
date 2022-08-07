@@ -14,10 +14,6 @@ public class Player : MonoBehaviour
         set => _speed = value;
     }
 
-    // Project prefab to spawn
-    [SerializeField] private GameObject _projectile;
-    [SerializeField] private float _projectileSpeed;
-
     // Physics component
     [SerializeField] private Rigidbody2D rb;
 
@@ -66,12 +62,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("mouse 0"))
-        {
-            ShootLightningBolt();
-        }
-
-        if (Input.GetKeyDown("mouse 1"))
+        if (Input.GetKeyDown("mouse 0"))
         {
             SpawnTotem();
         }
@@ -107,17 +98,6 @@ public class Player : MonoBehaviour
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         return (mousePosition - (Vector2)transform.position).normalized;
-    }
-
-    private void ShootProjectile()
-    {
-        if (!_canShoot || _isSpawningTotem)
-            return;
-
-        StartCoroutine(ShootCooldownTimer());
-        GameObject instantiatedProjectile = Instantiate(_projectile, transform.position, Quaternion.identity);
-        Projectile projectile = instantiatedProjectile.GetComponent<Projectile>();
-        projectile.SetVelocity(GetAimDirection() * _projectileSpeed);
     }
 
     private void ShootLightningBolt()

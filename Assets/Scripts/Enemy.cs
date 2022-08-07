@@ -57,9 +57,15 @@ public class Enemy : MonoBehaviour
     {
         ResetMoveSpeed();
     }
+  
 
     void MoveCharacter(Vector2 direction) {
         rb.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
+    }
+
+    public void SetPlayer(Transform p)
+    {
+        player = p; 
     }
 
     public void ResetMoveSpeed()
