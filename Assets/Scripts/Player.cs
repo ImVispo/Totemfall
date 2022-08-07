@@ -17,17 +17,12 @@ public class Player : MonoBehaviour
     // Physics component
     [SerializeField] private Rigidbody2D rb;
 
-    [SerializeField] private float _shootCooldown;
-    private bool _canShoot = true;
-
     [SerializeField] private int _health;
     [SerializeField] private Slider healthBar;
 
     [SerializeField] private float totemSpawnRange;
     [SerializeField] private List<Totem> totemPrefabs;
     [SerializeField] private SpriteRenderer rangeIndicator;
-
-    [SerializeField] private GameObject _lightningBolt;
 
     // Are we currently trying to place a totem
     private bool _isSpawningTotem;
@@ -91,35 +86,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = _input * _speed;
-    }
-
-    // Returns normalized vector of direction towards mouse
-    protected Vector2 GetAimDirection()
-    {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return (mousePosition - (Vector2)transform.position).normalized;
-    }
-
-    private void ShootLightningBolt()
-    {
-        if (!_canShoot || _isSpawningTotem)
-            return;
-
-        StartCoroutine(ShootCooldownTimer());
-        GameObject gameObject = Instantiate<GameObject>(_lightningBolt, transform.position, Quaternion.identity);
-        LightningBolt2D lightningBolt = gameObject.GetComponent<LightningBolt2D>();
-        lightningBolt.startPoint = transform.position;
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        lightningBolt.endPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        lightningBolt.FireOnce();
-    }
-
-    private IEnumerator ShootCooldownTimer()
-    {
-        _canShoot = false;
-        yield return new WaitForSeconds(_shootCooldown);
-        _canShoot = true;
     }
 
     public void TakeDamage(int damage)
