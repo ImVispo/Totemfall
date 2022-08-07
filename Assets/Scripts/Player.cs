@@ -56,10 +56,10 @@ public class Player : MonoBehaviour
             _totemSpawnIndicator.transform.position = mousePos;
             if (Vector2.Distance(mousePos, transform.position) > totemSpawnRange)
             {
-                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = Color.red;
+                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, .5f);
             } else
             {
-                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = Color.white;
+                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
             }
         }
 
@@ -108,7 +108,6 @@ public class Player : MonoBehaviour
 
     private void ShootProjectile()
     {
-        Debug.Log(!_canShoot || _isSpawningTotem);
         if (!_canShoot || _isSpawningTotem)
             return;
 
