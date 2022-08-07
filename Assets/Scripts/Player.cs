@@ -28,32 +28,54 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float totemSpawnRange;
     [SerializeField] private List<Totem> totemPrefabs;
+    [SerializeField] private SpriteRenderer rangeIndicator;
+
+    // Are we currently trying to place a totem
+    private bool _isSpawningTotem;
+    private GameObject _totemSpawnIndicator;
+    private Totem _selectedTotem = null;
 
     // Update is called once per frame
     private void Update()
     {
 
-        if (Input.GetKeyDown("mouse 1"))
-        {
-            DoDamage(5);
-        }
-
         if (Input.GetKeyDown("1"))
         {
-            SpawnTotem(totemPrefabs[0]);
+            StartSpawnTotem(totemPrefabs[0]);
         }
 
         if (Input.GetKeyDown("2"))
         {
-            SpawnTotem(totemPrefabs[1]);
+            StartSpawnTotem(totemPrefabs[1]);
+        }
+
+        if (_isSpawningTotem && _totemSpawnIndicator != null)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            _totemSpawnIndicator.transform.position = mousePos;
+            if (Vector2.Distance(mousePos, transform.position) > totemSpawnRange)
+            {
+                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = Color.red;
+            } else
+            {
+                _totemSpawnIndicator.GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
 
         if (Input.GetKey("mouse 0"))
+        {
             ShootProjectile();
+        }
+
+        if (Input.GetKeyDown("mouse 1"))
+        {
+            SpawnTotem();
+        }
 
         _input = new Vector2(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical")
+        Input.GetAxisRaw("Horizontal"),
+        Input.GetAxisRaw("Vertical")
         ).normalized;
 
         if (_input.x > 0)
@@ -86,7 +108,8 @@ public class Player : MonoBehaviour
 
     private void ShootProjectile()
     {
-        if (!_canShoot)
+        Debug.Log(!_canShoot || _isSpawningTotem);
+        if (!_canShoot || _isSpawningTotem)
             return;
 
         StartCoroutine(ShootCooldownTimer());
@@ -108,10 +131,37 @@ public class Player : MonoBehaviour
         healthBar.SetSize(_health / 100f);
     }
 
-    public void SpawnTotem(Totem totemPrefab)
+    private void StartSpawnTotem(Totem totemPrefab)
     {
+        if  (_totemSpawnIndicator != null)
+            Destroy(_totemSpawnIndicator);
+
+        _selectedTotem = totemPrefab;
+        _isSpawningTotem = true;
+        rangeIndicator.enabled = true;
+
+        Sprite sprite = totemPrefab.GetComponent<SpriteRenderer>().sprite;
+        _totemSpawnIndicator = new GameObject("TotemSpawnIndicator");
+        SpriteRenderer sr = _totemSpawnIndicator.AddComponent<SpriteRenderer>();
+        sr.sortingLayerName = "Top";
+        sr.sprite = sprite;
+        Color color = sr.color;
+        color.a /= 2;
+    }
+
+    public void SpawnTotem()
+    {
+        if (_selectedTotem == null)
+            return;
+
+        _isSpawningTotem = false;
+        rangeIndicator.enabled = false;
+        if (_totemSpawnIndicator != null)
+            Destroy(_totemSpawnIndicator);
+
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Vector2.Distance(mousePosition, transform.position) > totemSpawnRange) return;
-        Instantiate<Totem>(totemPrefab, (Vector3)mousePosition, Quaternion.identity);
+        Instantiate<Totem>(_selectedTotem, (Vector3)mousePosition, Quaternion.identity);
+        _selectedTotem = null;
     }
 }
