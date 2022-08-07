@@ -35,7 +35,7 @@ public class LightningBolt : MonoBehaviour
             //lightningBolt.arcCount = 3;
         }
 
-        enemy.DoDamage(_damageDealt);
+        enemy.TakeDamage(_damageDealt);
         createDamagePopup(_damageDealt, enemy.GetComponent<Rigidbody2D>().position, isCrit);
         StartCoroutine(DestroyGameObject());
     }

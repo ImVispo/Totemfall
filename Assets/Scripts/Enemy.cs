@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
         get => _speed;
         set => _speed = value;
     }
+    [SerializeField] private int _damage;
+    [SerializeField] private int _dealDamageTimer;
+    private bool _canDealDamage = true;
 
     private Vector2 movement;
 
@@ -37,6 +40,24 @@ public class Enemy : MonoBehaviour
         MoveCharacter(movement);
     }
 
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.tag != "Player")
+        {
+            return;
+        }
+
+
+        Player player = collider.gameObject.GetComponent<Player>();
+        Speed = 0;
+        DealDamage(player);
+    }
+
+    private void OnCollisionExit2D(Collision2D collider)
+    {
+        ResetMoveSpeed();
+    }
+
     void MoveCharacter(Vector2 direction) {
         rb.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
     }
@@ -46,13 +67,27 @@ public class Enemy : MonoBehaviour
         Speed = _baseSpeed;
     }
 
-    public void DoDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _health -= damage;
         if (_health <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    public void DealDamage(Player player)
+    {
+        if (!_canDealDamage) return;
+        StartCoroutine(DealDamageTimer());
+        player.TakeDamage(_damage);
+    }
+
+    private IEnumerator DealDamageTimer()
+    {
+        _canDealDamage = false;
+        yield return new WaitForSeconds(_dealDamageTimer);
+        _canDealDamage = true;
     }
 
 

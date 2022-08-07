@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
         _canShoot = true;
     }
 
-    public void DoDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _health -= damage;
         healthBar.SetSize(_health / 100f);

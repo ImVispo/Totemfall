@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
 
         // get enemy component and do some damage to enemy component
         Enemy enemy = collider.GetComponent<Enemy>();
-        enemy.DoDamage(_damage);
+        enemy.TakeDamage(_damage);
         createDamagePopup(_damage, false);
         Destroy(gameObject);
     }
