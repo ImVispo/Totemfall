@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class LavaBurst : Projectile
 {
     public override void FireAbility(Enemy enemy)

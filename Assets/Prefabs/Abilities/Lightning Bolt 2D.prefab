@@ -310,3 +310,4 @@ MonoBehaviour:
   _damage: 10
   _critChance: 0.25
   _pfDamagePopup: {fileID: 7311723838292075017, guid: 7b73d0e7736016241ae6d7e9c7880046, type: 3}
+  _requiresEnemy: 1

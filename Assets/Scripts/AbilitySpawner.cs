@@ -6,7 +6,8 @@ using UnityEngine;
 public class AbilitySpawner : MonoBehaviour
 {
     // Gameobject within the radius
-    [SerializeField] Ability _abilityPrefab;
+    //[SerializeField] Ability _abilityPrefab;
+    [SerializeField] List<Ability> _abilityPrefabs;
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private float _fireRate;
     private bool _canFire = true;
@@ -18,19 +19,31 @@ public class AbilitySpawner : MonoBehaviour
 
         Enemy closestEnemy = null;
         float closestDistance = 0;
-        foreach (Enemy e in enemies)
+        foreach (Enemy enemy in enemies)
         {
-            float distance = Vector2.Distance(transform.position, e.transform.position);
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
             if (closestEnemy == null || distance < closestDistance)
             {
                 closestDistance = distance;
-                closestEnemy = e;
+                closestEnemy = enemy;
             }
         }
-        if (closestEnemy) {
-            Ability ability = Instantiate<Ability>(_abilityPrefab, transform.position, Quaternion.identity);
-            ability.FireAbility(closestEnemy);
-        } 
+        foreach (Ability abilityPf in _abilityPrefabs)
+        {
+            if (abilityPf._requiresEnemy)
+            {
+                if (closestEnemy)
+                {
+                    Ability ability = Instantiate<Ability>(abilityPf, transform.position, Quaternion.identity);
+                    ability.FireAbility(closestEnemy);
+                }
+            }
+            else
+            {
+                Ability ability = Instantiate<Ability>(abilityPf, transform.position, Quaternion.identity);
+                ability.FireAbility();
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

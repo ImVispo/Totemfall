@@ -8,25 +8,20 @@ public class Player : MonoBehaviour
     private Vector2 _input;
 
     public ParticleSystem dust;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Slider healthBar;
 
+    [SerializeField] private int _health;
     [SerializeField] private float _speed;
     public float Speed
     {
         get => _speed;
         set => _speed = value;
     }
-
-    // Physics component
-    [SerializeField] private Rigidbody2D rb;
-
-    [SerializeField] private int _health;
-    [SerializeField] private Slider healthBar;
-
     [SerializeField] private float totemSpawnRange;
-    [SerializeField] private List<Totem> totemPrefabs;
     [SerializeField] private SpriteRenderer rangeIndicator;
+    [SerializeField] private List<Totem> totemPrefabs;
 
-    // Are we currently trying to place a totem
     private bool _isSpawningTotem;
     private GameObject _totemSpawnIndicator;
     private Totem _selectedTotem = null;
@@ -35,15 +30,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown("1"))
-        {
-            StartSpawnTotem(totemPrefabs[0]);
-        }
-
-        if (Input.GetKeyDown("2"))
-        {
-            StartSpawnTotem(totemPrefabs[1]);
-        }
+        if (Input.GetKeyDown("1")) StartSpawnTotem(totemPrefabs[0]);
+        if (Input.GetKeyDown("2")) StartSpawnTotem(totemPrefabs[1]);
+        if (Input.GetKeyDown("3")) StartSpawnTotem(totemPrefabs[2]);
 
         if (_isSpawningTotem && _totemSpawnIndicator != null)
         {

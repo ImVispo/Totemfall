@@ -9,7 +9,12 @@ public abstract class Ability : MonoBehaviour
     [SerializeField] protected float _critChance;
     protected bool isCrit = false;
     [SerializeField] private Transform _pfDamagePopup;
+    public bool _requiresEnemy = false;
 
+    public virtual void FireAbility()
+    {
+
+    }
     public abstract void FireAbility(Enemy enemy);
 
     public virtual int CalculateDamage()

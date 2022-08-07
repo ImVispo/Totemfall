@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8242274283634629665}
   - component: {fileID: 8465366112010787635}
   m_Layer: 0
-  m_Name: Fire Blast Totem
+  m_Name: Lava Burst Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,6 +233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9fbede6ea92eb4d9c4e4955c3be6b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 25
+  duration: 20
   _slider: {fileID: 8374450869785433277, guid: a1dc0cd20a4d8c6408b5547637f7e23c, type: 3}
   enemies: []
