@@ -17,7 +17,19 @@ public class AbilitySpawner : MonoBehaviour
         StartCoroutine(FireCooldownTimer());
 
         Ability ability = Instantiate<Ability>(_abilityPrefab, transform.position, Quaternion.identity);
-        ability.FireAbility(enemies[0]);
+
+        Enemy closestEnemy = null;
+        float closestDistance = 0;
+        foreach (Enemy e in enemies)
+        {
+            float distance = Vector2.Distance(transform.position, e.transform.position);
+            if (closestEnemy == null || distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = e;
+            }
+        }
+        if (closestEnemy) ability.FireAbility(closestEnemy);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
