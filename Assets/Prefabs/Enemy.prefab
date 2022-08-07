@@ -124,7 +124,7 @@ MonoBehaviour:
   player: {fileID: 0}
   rb: {fileID: 6038614570522125675}
   _health: 10
-  _baseSpeed: 3
+  _baseSpeed: 4
   _damage: 20
   _dealDamageTimer: 1
 --- !u!70 &6038614570522125687

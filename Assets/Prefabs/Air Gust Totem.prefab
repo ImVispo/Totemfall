@@ -203,7 +203,7 @@ MonoBehaviour:
   duration: 10
   _slider: {fileID: 8374450869785433277, guid: a1dc0cd20a4d8c6408b5547637f7e23c, type: 3}
   enemies: []
-  _speedBonus: 3
+  _speedBonus: 2
 --- !u!114 &279590513271688056
 MonoBehaviour:
   m_ObjectHideFlags: 0

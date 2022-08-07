@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     private Vector2 _input;
 
+    public ParticleSystem dust;
+
     [SerializeField] private float _speed;
     public float Speed
     {
@@ -63,8 +65,8 @@ public class Player : MonoBehaviour
         }
 
         _input = new Vector2(
-        Input.GetAxisRaw("Horizontal"),
-        Input.GetAxisRaw("Vertical")
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
         ).normalized;
 
         if (_input.x > 0)
@@ -86,6 +88,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = _input * _speed;
+        if (rb.velocity.magnitude > 0)
+        {
+            CreateDust();
+        } 
     }
 
     public void TakeDamage(int damage)
@@ -126,5 +132,10 @@ public class Player : MonoBehaviour
         if (Vector2.Distance(mousePosition, transform.position) > totemSpawnRange) return;
         Instantiate<Totem>(_selectedTotem, (Vector3)mousePosition, Quaternion.identity);
         _selectedTotem = null;
+    }
+
+    private void CreateDust()
+    {
+        dust.Play();
     }
 }
