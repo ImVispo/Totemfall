@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LightningBolt : Ability
 {
-
     public override void FireAbility(Enemy enemy)
     {
         LightningBolt2D lightningBolt = GetComponent<LightningBolt2D>();

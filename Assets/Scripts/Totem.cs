@@ -30,10 +30,11 @@ public class Totem : MonoBehaviour
     {
         durationTimer -= Time.deltaTime;
         durationSlider.SetSize(durationTimer / duration);
+        OnTotemUpdate();
         if (durationTimer > 0) return;
 
-        Destroy(durationSlider.gameObject);
         OnTotemExpired();
+        Destroy(durationSlider.gameObject);
         Destroy(gameObject);
     }
 
@@ -60,6 +61,11 @@ public class Totem : MonoBehaviour
     }
 
     protected virtual void UnitExit(GameObject gameObject)
+    {
+
+    }
+
+    protected virtual void OnTotemUpdate()
     {
 
     }

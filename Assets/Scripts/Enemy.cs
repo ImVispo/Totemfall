@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
 
     [Space]
     [Header("Settings")]
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
+    private int _health;
     [SerializeField] private float _baseSpeed;
     private float _speed;
     public float Speed
@@ -23,20 +24,24 @@ public class Enemy : MonoBehaviour
     private bool _canDealDamage = true;
 
     private Vector2 movement;
+    private bool _canMove = true;
 
     private void Start()
     {
         _speed = _baseSpeed;
+        _health = _maxHealth;
     }
 
     private void Update()
     {
+        if (!_canMove) return;
         Vector3 direction = player.position - transform.position;
         movement = direction.normalized;
     }
 
     private void FixedUpdate()
     {
+        if (!_canMove) return;
         MoveCharacter(movement);
     }
 
@@ -59,7 +64,7 @@ public class Enemy : MonoBehaviour
     }
   
 
-    void MoveCharacter(Vector2 direction) {
+    public void MoveCharacter(Vector2 direction) {
         rb.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
     }
 
@@ -96,5 +101,14 @@ public class Enemy : MonoBehaviour
         _canDealDamage = true;
     }
 
+    public void CanMove(bool canMove)
+    {
+        _canMove = canMove;
+    }
+
+    public int GetMaxHealth()
+    {
+        return _maxHealth;
+    }
 
 }

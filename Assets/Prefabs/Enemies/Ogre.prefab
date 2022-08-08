@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6038614570522125687}
   - component: {fileID: 9088890723164325532}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Ogre
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   rb: {fileID: 6038614570522125675}
-  _health: 100
-  _baseSpeed: 3
+  _maxHealth: 40
+  _baseSpeed: 2
   _damage: 20
   _dealDamageTimer: 1
 --- !u!70 &6038614570522125687
