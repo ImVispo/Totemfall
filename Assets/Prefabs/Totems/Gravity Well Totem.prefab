@@ -203,6 +203,7 @@ MonoBehaviour:
   duration: 3
   _slider: {fileID: 8374450869785433277, guid: a1dc0cd20a4d8c6408b5547637f7e23c, type: 3}
   enemies: []
+  _pfExplosion: {fileID: 4143839027359249821, guid: e0e8aee64bbd013469dd84d3b52feded, type: 3}
   _maxHealthDamageModifier: 0.5
   _pfDamagePopup: {fileID: 7311723838292075017, guid: 7b73d0e7736016241ae6d7e9c7880046, type: 3}
 --- !u!114 &7070567874685757699

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GravityWellTotem : Totem
 {
+    public ParticleSystem _pfExplosion;
     [SerializeField] float _maxHealthDamageModifier;
     [SerializeField] private Transform _pfDamagePopup;
 
@@ -26,7 +27,8 @@ public class GravityWellTotem : Totem
 
     protected override void OnTotemExpired()
     {
-        foreach(Enemy enemy in enemies.ToArray())
+        CreateExplosion();
+        foreach (Enemy enemy in enemies.ToArray())
         {
             enemy.ResetMoveSpeed();
             enemy.CanMove(true);
@@ -41,5 +43,10 @@ public class GravityWellTotem : Totem
         Transform damagePopupTransform = Instantiate(_pfDamagePopup, position, Quaternion.identity);
         DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
         damagePopup.Setup(damageDealt, false);
+    }
+
+    private void CreateExplosion()
+    {
+        Instantiate(_pfExplosion, transform.position, Quaternion.identity);
     }
 }
