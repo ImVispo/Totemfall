@@ -14,4 +14,5 @@ My first Unity game created for a game jam! A top down survival game where you t
 - Camera controller that shifts based on cursor position 
 - An in-game timer
 
-![alt text](https://github.com/ImVispo/Totemfall/blob/main/totemfall_screenshot.PNG?raw=true)
+![alt text](https://github.com/ImVispo/Totemfall/blob/main/screenshot1.PNG?raw=true)
+![alt text](https://github.com/ImVispo/Totemfall/blob/main/screenshot2.PNG?raw=true)
