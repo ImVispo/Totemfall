@@ -13,3 +13,5 @@ My first Unity game created for a game jam! A top down survival game where you t
 - Damage / HP system with damage popups
 - Camera controller that shifts based on cursor position 
 - An in-game timer
+
+![alt text](https://github.com/ImVispo/Totemfall/blob/master/totemfall_screenshot.png?raw=true)
