@@ -7,6 +7,7 @@ My first Unity game created for a game jam! A top down survival game where you t
 - Able to place down totems on the ground
   - Speed Totem (place to speed up the player)
   - Rooting Totem (roots enemies in intervals)
+  - Lava Burst Totem (shoots lava projectiles towards enemies)
   - Gravity Well Totem (pulls enemies towards the totem, then explodes for AOE damage)
 - Lightning bolt that passively shoots out of the player
 - Enemies that run toward the player with random spawn points
